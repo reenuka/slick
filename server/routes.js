@@ -180,4 +180,21 @@ router.post('/workspaces', async (req, res) => {
   }
 });
 
+// GET request to /memberList, return array of members
+/*
+  Returns to client array of member objects
+  [
+    {
+      username: user_name // name of user
+    }
+  ]
+*/
+router.get('/memberList', async (req, res) => {
+  try {
+    return res.status(200).json(await db.getAllUsers());
+  } catch (err) {
+    return res.status(500).json(err.stack);
+  }
+});
+
 module.exports = router;
