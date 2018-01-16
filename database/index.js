@@ -3,8 +3,8 @@ const path = require('path');
 const fs = require('fs');
 
 const client = new Client({
-  connectionString: 'postgresql://localhost:5432/slick',
-  //ssl: true,
+  connectionString: 'postgresql://localhost:5432/slick'
+  // ssl: true,
 });
 
 client
@@ -62,6 +62,12 @@ const getUser = username =>
   client
     .query('SELECT * FROM users WHERE username = ($1)', [username])
     .then(data => data.rows[0]);
+
+// pull all users from users table in database
+const getAllUsers = () =>
+  client
+    .query('SELECT username FROM users')
+    .then(data => data.rows);
 
 // pull user password hint from users table in database
 const getPasswordHint = username =>

@@ -3,6 +3,7 @@ import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import MessageList from './MessageList.jsx';
 import WorkSpaceList from './WorkSpaceList.jsx';
 import PropTypes from 'prop-types';
+import MemberList from './MemberList.jsx';
 
 //container for other containers
 export default class Body extends React.Component {
@@ -34,6 +35,9 @@ export default class Body extends React.Component {
             <MessageList messages={messages} currentWorkSpaceId={currentWorkSpaceId} />
           </Col>
         </Row>
+        <div>
+          <MemberList />
+        </div>
       </Container>
     );
   }
