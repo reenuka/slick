@@ -4,10 +4,9 @@
 
 ## Team
 
-* Andy Dam
-* Austin Shin
-* Chase Lee
-* Shawn Ranck
+* Michael Cooper
+* Jonathan Jian
+* Reenuka Sarika Ramphal
 
 ## Table of Contents
 
