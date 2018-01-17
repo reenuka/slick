@@ -1,4 +1,4 @@
-# slackk-casa
+# slick-slack
 
 > slackk-casa is a workplace team collaboration tool
 
