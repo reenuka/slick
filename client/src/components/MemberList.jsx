@@ -6,6 +6,7 @@ import Member from './Member.jsx';
 export default ({ member, currentWorkSpaceId }) => (
   <div>
     <Container>
+      <h1>testing testing testing</h1>
       <Member />
     </Container>
   </div>

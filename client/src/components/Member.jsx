@@ -66,7 +66,7 @@ export default class extends React.Component {
 
     return (
       <div>
-          <div>HI</div>
+          <div>testing testing testing</div>
       </div>
     );
   }
