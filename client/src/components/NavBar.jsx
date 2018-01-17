@@ -44,7 +44,7 @@ export default class NavBar extends React.Component {
         <NavbarBrand>
           <h1>slick-slack</h1>
 
-          <h6 style={styles}>Logged in as: {this.props.username}</h6>
+          <h6 style={styles}>Logged In As: {this.props.username}</h6>
         </NavbarBrand>
         <h3 className="text-center">
           #{this.props.currentWorkSpaceName || 'select a workspace!'}{' '}
