@@ -3,8 +3,8 @@ const path = require('path');
 const fs = require('fs');
 
 const client = new Client({
-  connectionString: process.env.DATABASE_URL,
-  ssl: true,
+  connectionString: 'postgresql://localhost:5432/slick',
+  //ssl: true,
 });
 
 client
@@ -93,7 +93,7 @@ const getEmails = () => client.query('SELECT email FROM USERS')
   .then(data => data.rows);
 
 // create necessary tables if environment flag INITIALIZEDB is set to true
-if (process.env.INITIALIZEDB) {
+if (initializeDB) {
   initializeDB()
     .then()
     .catch(err => console.error('error creating database tables, ', err.stack));
