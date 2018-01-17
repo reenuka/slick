@@ -1,15 +1,36 @@
-import React from 'react';
-import { Container, ListGroup } from 'reactstrap';
+import React, { Component } from 'react';
+import { Alert, Row, Col } from 'reactstrap';
 import Member from './Member.jsx';
+import CreateWorkSpace from './CreateWorkSpace.jsx';
+import PropTypes from 'prop-types';
 
-//container for member components
-export default ({ member, currentWorkSpaceId }) => (
-  <div>
-    <Container>
-      <h1>testing testing testing</h1>
-      <Member />
-    </Container>
-  </div>
-);
+//Container for all workspaces
+export default class MemberList extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      users: ["a", "b", "c"]
+    }
+  }
 
-// {member.map(member => <Member member={member} key={member.id} />)}
+  //renders everything to do with workspaces, including creation
+  render() {
+    return (
+      <div>
+        <h3>Member List</h3>
+        {this.state.users.map(member => (
+          <Member member={member}/>
+        ))}
+      </div>
+    );
+  }
+}
+//required prop types
+// MemberList.propTypes = {
+//   members: PropTypes.array,
+//   currentWorkSpaceId: PropTypes.number,
+// }
+
+// {members.map(workSpace => (
+//   <Member />
+// ))}

@@ -3,6 +3,7 @@ CREATE TABLE IF NOT EXISTS "users" (
 	"username" varchar(1024) NOT NULL UNIQUE,
 	"password" varchar(1024) NOT NULL,
 	"email" varchar(1024) NOT NULL,
+	"logged_in" int(1) NOT NULL,
 	"password_hint" varchar(8192),
 	CONSTRAINT users_pk PRIMARY KEY ("id")
 ) WITH (

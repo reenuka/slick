@@ -14,6 +14,7 @@ const checkUser = async (username, password) => {
   return passhash ? bcrypt.compare(password, passhash) : false;
 };
 
+const logUserIn = async (username) => db.logIn(username);
 
 module.exports = {
   addUser,

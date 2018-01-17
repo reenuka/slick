@@ -31,12 +31,22 @@ export default class NavBar extends React.Component {
       isOpen: false,
     };
   }
+
   toggle() {
     this.setState({
       isOpen: !this.state.isOpen,
     });
   }
 
+  updateUsers(event) {
+    fetch(url, {
+      method: 'PUT',
+      body: JSON.stringify(this.state.username)
+    })
+      .then(resp => resp.json())
+      .then(users => this.setState({ users }))
+      .catch(console.error);
+  }
 
   render() {
     return (
@@ -58,7 +68,7 @@ export default class NavBar extends React.Component {
               </DropdownToggle>
               <DropdownMenu>
                 <NavLink href="/login">
-                  <DropdownItem>Sign Out</DropdownItem>
+                  <DropdownItem onClick={updateUsers}>Sign Out</DropdownItem>
                 </NavLink>
               </DropdownMenu>
             </UncontrolledDropdown>

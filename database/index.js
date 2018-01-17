@@ -53,7 +53,7 @@ const getMessages = workspaceId =>
 // post new user to users table in database
 const createUser = (username, passhash, email, passhint) =>
   client.query(
-    'INSERT INTO users (username, password, email, password_hint) VALUES ($1, $2, $3, $4) RETURNING *',
+    'INSERT INTO users (username, password, email, logged_in, password_hint) VALUES ($1, $2, $3, $4) RETURNING *',
     [username, passhash, email, passhint],
   ).then(data => data.rows[0]);
 
@@ -98,6 +98,12 @@ const getWorkspaces = () => client.query('SELECT * FROM workspaces').then(data =
 const getEmails = () => client.query('SELECT email FROM USERS')
   .then(data => data.rows);
 
+// update logged_in value in users table to 0 upon logout
+const logIn = username => client.query('UPDATE logged_in IN users TO 1 WHERE username = ($1)');
+
+// update logged_in value in users table to 0 upon logout
+const logOut = username => client.query('UPDATE logged_in IN users TO 0 WHERE username = ($1)');
+
 // create necessary tables if environment flag INITIALIZEDB is set to true
 if (initializeDB) {
   initializeDB()
@@ -112,8 +118,10 @@ module.exports = {
   getMessages,
   createUser,
   getUser,
+  getAllUsers,
   createWorkspace,
   getWorkspaces,
   getEmails,
   getPasswordHint,
+  logOut
 };

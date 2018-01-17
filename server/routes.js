@@ -106,8 +106,11 @@ router.post('/signup', async (req, res) => {
     - 401 - User login incorrect
 */
 router.post('/login', bodyParser.json());
-router.post('/login', passport.authenticate('local'), (req, res) => res.sendStatus(200));
-
+router.post('/login', passport.authenticate('local'), (req, res) => {
+  let username = req.body.username;
+  auth.logUserIn(username);
+  res.sendStatus(200));
+}
 // POST request to /recover, used to get password hint for user
 /*
   Request object from client:

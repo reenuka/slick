@@ -5,35 +5,13 @@ export default class extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      toggleHover: false,
+      users: []
     };
   }
-  toggleHover() {
-    this.setState({ toggleHover: !this.state.toggleHover });
-  }
+
   render() {
     const { message } = this.props;
-    //for the color changing avatars
-    // let color = () => {
-    //   let colors = [
-    //     '#346A85',
-    //     '#AFE356',
-    //     '#348569',
-    //     '#F6a43D',
-    //     '#AAD3E6',
-    //     '#7F3485',
-    //     '#992B41',
-    //     '#3B94D9',
-    //     '#E95F28',
-    //     '#4A913C',
-    //     '#FFAC33',
-    //     '#8899A6',
-    //     '#744EAA',
-    //     '#BE1931',
-    //   ];
-    //   let index = Math.floor(Math.random() * colors.length);
-    //   return colors[index];
-    // };
+
     //Styles for individual message component
     // const styles = {
     //   body: {
