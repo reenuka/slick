@@ -76,3 +76,7 @@
   background-color: #4c9689;
   color: #ffffff;
 }
+
+.drop-zone.active {
+  border: 2px dashed red;
+}
