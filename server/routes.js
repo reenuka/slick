@@ -109,8 +109,7 @@ router.post('/login', bodyParser.json());
 router.post('/login', passport.authenticate('local'), (req, res) => {
   let username = req.body.username;
   auth.logUserIn(username);
-  res.sendStatus(200));
-}
+  res.sendStatus(200)});
 // POST request to /recover, used to get password hint for user
 /*
   Request object from client:
@@ -195,6 +194,15 @@ router.post('/workspaces', async (req, res) => {
 router.get('/memberList', async (req, res) => {
   try {
     return res.status(200).json(await db.getAllUsers());
+  } catch (err) {
+    return res.status(500).json(err.stack);
+  }
+});
+
+router.put('/navbar', async (req, res) => {
+  try {
+    await db.logOut(req.body.name);
+    return rest.sendStatus(200);
   } catch (err) {
     return res.status(500).json(err.stack);
   }

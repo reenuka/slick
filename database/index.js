@@ -53,7 +53,7 @@ const getMessages = workspaceId =>
 // post new user to users table in database
 const createUser = (username, passhash, email, passhint) =>
   client.query(
-    'INSERT INTO users (username, password, email, logged_in, password_hint) VALUES ($1, $2, $3, $4) RETURNING *',
+    'INSERT INTO users (username, password, email, logged_in, password_hint) VALUES ($1, $2, $3, 0, $4) RETURNING *',
     [username, passhash, email, passhint],
   ).then(data => data.rows[0]);
 
