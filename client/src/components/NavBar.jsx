@@ -16,6 +16,12 @@ import {
   DropdownItem,
 } from 'reactstrap';
 
+
+var styles = {
+  color:'green',
+  fontWeight:'bold'
+};
+
 export default class NavBar extends React.Component {
   constructor(props) {
     super(props);
@@ -30,11 +36,15 @@ export default class NavBar extends React.Component {
       isOpen: !this.state.isOpen,
     });
   }
+
+
   render() {
     return (
       <Navbar color="faded" light expand="md">
         <NavbarBrand>
-          <h1>slackk-casa</h1>
+          <h1>slick-slack</h1>
+
+          <h6 style={styles}>Logged in as: {this.props.username}</h6>
         </NavbarBrand>
         <h3 className="text-center">
           #{this.props.currentWorkSpaceName || 'select a workspace!'}{' '}

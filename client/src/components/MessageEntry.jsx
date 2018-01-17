@@ -14,6 +14,7 @@ export default class extends React.Component {
   }
   render() {
     const { message } = this.props;
+    console.log("here", {message})
     //for the color changing avatars
     let color = () => {
       let colors = [

@@ -80,7 +80,7 @@ export default class App extends React.Component {
     } = this.state;
     return (
       <div className="app-container">
-        <NavBar currentWorkSpaceName={currentWorkSpaceName} />
+        <NavBar currentWorkSpaceName={currentWorkSpaceName} username={this.props.location.state.username} />
         <Body
           messages={messages}
           workSpaces={workSpaces}

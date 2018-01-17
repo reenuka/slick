@@ -7,7 +7,7 @@ const PORT = process.env.PORT || 3000;
 
 const server = express()
   .use(router)
-  .listen(PORT, () => console.log(`slackk-casa listening on port ${PORT}`));
+  .listen(PORT, () => console.log(`slick-slack listening on port ${PORT}`));
 
 // create a WebSocket server and attach to Express server to share ports
 const wss = new WebSocket.Server({ server });
