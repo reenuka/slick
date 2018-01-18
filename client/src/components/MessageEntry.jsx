@@ -81,7 +81,7 @@ export default class extends React.Component {
             {message.username}
             <span style={styles.timeStamp}>{new Date(message.createdAt).toLocaleTimeString()}</span>
           </span>
-          <div style={styles.message}>{message.text}</div>
+          <div style={styles.message}>{ message.text.includes('https://s3-us-west-1.amazonaws.com/slickslack') ? <a href ={message.text} > {message.text} <img src={message.text} /> </a> : message.text }</div>
         </Container>
       </div>
     );

@@ -1,16 +1,19 @@
 import React from 'react';
 import { connect, sendMessage } from '../socketHelpers';
-import { Input } from 'reactstrap';
+import { Input, Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
 import NavBar from './NavBar.jsx';
 import MessageList from './MessageList.jsx';
 import Body from './Body.jsx';
+import Dropzone from 'react-dropzone';
+import upload from 'superagent';
 
-//The main component of the App. Renders the core functionality of the project.
+// The main component of the App. Renders the core functionality of the project.
 export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      //Default message informs the user to select a workspace
+      popoverOpener: false,
+      // Default message informs the user to select a workspace
       messages: [
         {
           text: 'Welcome to slackk-casa! Please select or create a workspace!',
@@ -26,6 +29,8 @@ export default class App extends React.Component {
       currentWorkSpaceId: 0,
       currentWorkSpaceName: '',
     };
+    this.onDrop = this.onDrop.bind(this);
+    this.toggler = this.toggler.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +40,27 @@ export default class App extends React.Component {
     connect(server, this);
   }
 
+  toggler() {
+    this.setState({
+      popoverOpener: !this.state.popoverOpener
+    });
+  }
+
+
+  onDrop(files) {
+    upload.post('/uploadimage')
+      .attach('theseNamesMustMatch', files[0])
+      .end((err, res) => {
+        if (err) console.log('ONDROP ERR ', err);
+        console.log('SUCCESS ONDROP ', res);
+        event.preventDefault();
+        sendMessage({
+          username: this.props.location.state.username,
+          text: res.text,
+          workspaceId: this.state.currentWorkSpaceId,
+        });
+      });
+  }
   // changes the query state based on user input in text field
   handleChange(event) {
     this.setState({
@@ -58,10 +84,8 @@ export default class App extends React.Component {
         query: '',
       });
     }
-
-
   }
-  //grabs all existing workspaces
+  // grabs all existing workspaces
   loadWorkSpaces() {
     fetch('/workspaces')
       .then(resp => resp.json())
@@ -69,11 +93,11 @@ export default class App extends React.Component {
       .catch(console.error);
   }
 
-  //Helper function to reassign current workspace
+  // Helper function to reassign current workspace
   changeCurrentWorkSpace(id, name) {
     this.setState({ currentWorkSpaceId: id, currentWorkSpaceName: name });
   }
-  //renders nav bar, body(which contains all message components other than input), and message input
+  // renders nav bar, body(which contains all message components other than input), and message input
   render() {
     let {
       messages, query, workSpaces, currentWorkSpaceId, currentWorkSpaceName,
@@ -88,16 +112,31 @@ export default class App extends React.Component {
           changeCurrentWorkSpace={(id, name) => this.changeCurrentWorkSpace(id, name)}
           currentWorkSpaceId={currentWorkSpaceId}
         />
-        <div className="input-container">
-          <Input
-            value={query}
-            className="message-input-box"
-            type="textarea"
-            name="text"
-            placeholder={`Message #${currentWorkSpaceName || 'select a workspace!'}`}
-            onChange={event => this.handleChange(event)}
-            onKeyPress={event => this.handleKeyPress(event)}
-          />
+        <div className="messages-input">
+          <div className="image-input">
+            <Button color="success" id="Popover2" onClick={this.toggler}>
+            +
+            </Button>
+            <Popover placement="bottom" isOpen={this.state.popoverOpener} target="Popover2" toggle={this.toggler}>
+              <PopoverHeader>Upload a file!</PopoverHeader>
+              <PopoverBody>
+                <Dropzone onDrop={this.onDrop} >
+                  <div> click here or drag and drop! </div>
+                </Dropzone>
+              </PopoverBody>
+            </Popover>
+          </div>
+          <div className="input-container">
+            <Input
+              value={query}
+              className="message-input-box"
+              type="textarea"
+              name="text"
+              placeholder={`Message #${currentWorkSpaceName || 'select a workspace!'}`}
+              onChange={event => this.handleChange(event)}
+              onKeyPress={event => this.handleKeyPress(event)}
+            />
+        </div>
         </div>
       </div>
     );

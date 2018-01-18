@@ -45,6 +45,40 @@ router.get('/messages', passport.authenticate('local', { failureRedirect: '/logi
     - 400 - Username already exists
     - 401 - Database error, all other errors
 */
+
+const multer = require('multer');
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 52428800 },
+});
+
+const AWS = require('aws-sdk');
+
+router.post('/uploadimage', upload.single('theseNamesMustMatch'), (req, res) => {
+  console.log(req.file);
+  // Create an S3 client
+  let s3 = new AWS.S3();
+  // Create a bucket and upload something into it
+  let bucketName = 'slickslack';
+  let keyName = req.file.originalname;
+  s3.createBucket({ Bucket: bucketName }, () => {
+    let params = {
+      Bucket: bucketName,
+      Key: keyName,
+      Body: req.file.buffer,
+      ACL: 'public-read',
+    };
+    s3.putObject(params, (err, data) => {
+      if (err) console.log(err);
+      else {
+        console.log('SUCCESS UPLOADED ', bucketName, 'AND', keyName);
+        res.send(`https://s3-us-west-1.amazonaws.com/${bucketName}/${keyName}`);
+      }
+    });
+  });
+});
+
 router.post('/signup', bodyParser.json());
 router.post('/signup', async (req, res) => {
   try {
