@@ -19,4 +19,5 @@ const logUserIn = async (username) => db.logIn(username);
 module.exports = {
   addUser,
   checkUser,
+  logUserIn
 };

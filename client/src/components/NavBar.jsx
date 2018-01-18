@@ -38,15 +38,15 @@ export default class NavBar extends React.Component {
     });
   }
 
-  updateUsers(event) {
-    fetch(url, {
-      method: 'PUT',
-      body: JSON.stringify(this.state.username)
-    })
-      .then(resp => resp.json())
-      .then(users => this.setState({ users }))
-      .catch(console.error);
-  }
+  // updateUsers(event) {
+  //   fetch(url, {
+  //     method: 'PUT',
+  //     body: JSON.stringify(this.state.username)
+  //   })
+  //     .then(resp => resp.json())
+  //     .then(users => this.setState({ users }))
+  //     .catch(console.error);
+  // }
 
   render() {
     return (
@@ -68,7 +68,7 @@ export default class NavBar extends React.Component {
               </DropdownToggle>
               <DropdownMenu>
                 <NavLink href="/login">
-                  <DropdownItem onClick={updateUsers}>Sign Out</DropdownItem>
+                  <DropdownItem>Sign Out</DropdownItem>
                 </NavLink>
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -85,3 +85,5 @@ NavBar.propTypes = {
 NavBar.defaultProps = {
   currentWorkSpaceName: 'select a workspace!',
 }
+
+// onClick={this.updateUsers}

@@ -1,0 +1,2 @@
+ALTER TABLE "users" ADD "isLoggedIn" varchar(1);
+UPDATE "users" SET "isLoggedIn" = 0
