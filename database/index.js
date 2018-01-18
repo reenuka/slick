@@ -4,7 +4,7 @@ const fs = require('fs');
 
 const client = new Client({
   connectionString: 'postgresql://localhost:5432/slick'
-  // ssl: true,
+  // ssl: true
 });
 
 client
