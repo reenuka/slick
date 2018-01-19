@@ -43,6 +43,17 @@ const sendMessage = (data) => {
   ws.send(JSON.stringify(msg));
 };
 
+const sendTyping = (data) => {
+  const msg = {
+    method: 'TYPING',
+    data: {
+      username: data.username,
+      workspaceId: data.workspaceId,
+    },
+  };
+  ws.send(JSON.stringify(msg));
+};
+
 // takes a workspace Id as INT for parameter and returns the messages for that current workspace
 const getWorkSpaceMessagesFromServer = (id) => {
   const msg = { method: 'GETMESSAGES', data: { workspaceId: id } };
@@ -61,6 +72,19 @@ const filterMsgByWorkSpace = (msg) => {
   }
 };
 
+let timer = null;
+
+const renderTypingMessage = (data) => {
+  console.log(data)
+  app.setState({
+    typer: data.username,
+    typingWorkSpaceID: data.workspaceId,
+    renderTyping: true,
+  });
+  if (timer) clearInterval(timer);
+  timer = setTimeout(()=> app.setState({renderTyping: false}), 500);
+};
+
 // ws refers to websocket object
 const afterConnect = () => {
   ws.onmessage = (event) => {
@@ -73,6 +97,10 @@ const afterConnect = () => {
     }
 
     switch (serverResp.method) {
+      case 'TYPING':
+        renderTypingMessage(serverResp.data);
+        console.log(serverResp.data);
+        break;
       case 'GETMESSAGES':
         loadMessages(serverResp.data);
         break;
@@ -111,4 +139,4 @@ const connect = (server, component) => {
   });
 };
 
-export { connect, sendMessage, afterConnect, getWorkSpaceMessagesFromServer };
+export { connect, sendMessage, afterConnect, getWorkSpaceMessagesFromServer, sendTyping };

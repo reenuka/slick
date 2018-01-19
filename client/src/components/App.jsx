@@ -1,8 +1,9 @@
 import React from 'react';
-import { connect, sendMessage } from '../socketHelpers';
-import { Input, Button, Popover, PopoverHeader, PopoverBody } from "reactstrap";
+import { connect, sendMessage, sendTyping } from '../socketHelpers';
+import { Input, Button, Popover, PopoverHeader, PopoverBody, Alert } from 'reactstrap';
 import NavBar from './NavBar.jsx';
 import MessageList from './MessageList.jsx';
+import TypingAlert from './TypingAlert.jsx';
 import Body from './Body.jsx';
 import Dropzone from 'react-dropzone';
 import upload from 'superagent';
@@ -13,6 +14,9 @@ export default class App extends React.Component {
     super(props);
     this.state = {
       popoverOpener: false,
+      typer: '',
+      typingWorkSpaceID: null,
+      renderTyping: false,
       // Default message informs the user to select a workspace
       messages: [
         {
@@ -31,18 +35,18 @@ export default class App extends React.Component {
     };
     this.onDrop = this.onDrop.bind(this);
     this.toggler = this.toggler.bind(this);
+    this.handleKeyDown = this.handleKeyDown.bind(this);
   }
 
   componentDidMount() {
     let server = location.origin.replace(/^http/, 'ws');
-
     // connect to the websocket server
     connect(server, this);
   }
 
   toggler() {
     this.setState({
-      popoverOpener: !this.state.popoverOpener
+      popoverOpener: !this.state.popoverOpener,
     });
   }
 
@@ -85,6 +89,15 @@ export default class App extends React.Component {
       });
     }
   }
+
+  // sends keydown event to server to handle typing event
+  handleKeyDown(event) {
+    sendTyping({
+      username: this.props.location.state.username,
+      workspaceId: this.state.currentWorkSpaceId,
+    });
+  }
+
   // grabs all existing workspaces
   loadWorkSpaces() {
     fetch('/workspaces')
@@ -102,6 +115,9 @@ export default class App extends React.Component {
     let {
       messages, query, workSpaces, currentWorkSpaceId, currentWorkSpaceName,
     } = this.state;
+    let typing;
+    const timer = 5000;
+    console.log(this.state.typer)
     return (
       <div className="app-container">
         <NavBar currentWorkSpaceName={currentWorkSpaceName} username={this.props.location.state.username} />
@@ -114,7 +130,7 @@ export default class App extends React.Component {
         />
         <div className="messages-input">
           <div className="image-input">
-            <Button color="success" id="Popover2" onClick={this.toggler}>
+            <Button style={{ height: '60px', width: '60px', color: 'black', 'background-color': '#ffffff', border: '1px solid #ced4da' }} id="Popover2" onClick={this.toggler} >
             +
             </Button>
             <Popover placement="bottom" isOpen={this.state.popoverOpener} target="Popover2" toggle={this.toggler}>
@@ -127,6 +143,9 @@ export default class App extends React.Component {
             </Popover>
           </div>
           <div className="input-container">
+          <div className="typing-alert">
+            {this.state.renderTyping && (this.state.currentWorkSpaceId === this.state.typingWorkSpaceID) && (this.state.typer !== this.props.location.state.username) ? <TypingAlert username={this.state.typer} /> : <Alert color="light" style={{ padding: '0 0 0 0', margin: '0 0 0 0', color: 'white' }} > you cant see this </Alert> }
+          </div>
             <Input
               value={query}
               className="message-input-box"
@@ -135,8 +154,11 @@ export default class App extends React.Component {
               placeholder={`Message #${currentWorkSpaceName || 'select a workspace!'}`}
               onChange={event => this.handleChange(event)}
               onKeyPress={event => this.handleKeyPress(event)}
+              onKeyDown={event => this.handleKeyDown(event)}
+              // onKeyDown={clearTimeout(typing)}
+              // onKeyUp={typing = setTimeout(() => { this.setState({ renderTyping: false }); }), timer}
             />
-        </div>
+          </div>
         </div>
       </div>
     );
