@@ -41,6 +41,28 @@ const onMessage = async (ws, wss, data) => {
 
   // switch case to determine what to do with the message
   switch (message.method) {
+
+    case 'TYPING':
+      try {
+        // gets response from client and parsed message data
+        // now need to send back to clients to tell them to render someone is typing
+        ws.send(response(201, 'Typing post success', message.method, {
+          username: message.data.username,
+          workspaceId: message.data.workspaceId,
+        }));
+        console.log(message);
+        return updateEveryoneElse(
+          ws,
+          wss,
+          response(200, 'Typing update success', message.method, {
+            username: message.data.username,
+            workspaceId: message.data.workspaceId,
+          }),
+        );
+      } catch (err) {
+        return ws.send(response(400, err.stack, message.method));
+      }
+
     case 'GETMESSAGES':
     // method GETMESSAGES returns a list of previous messages for the given workspaceId
     /*
