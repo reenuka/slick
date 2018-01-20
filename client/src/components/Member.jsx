@@ -4,13 +4,10 @@ import React from 'react';
 export default class extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      users: []
-    };
   }
 
   render() {
-    const { message } = this.props;
+    const { member } = this.props.member;
 
     //Styles for individual message component
     // const styles = {
@@ -44,7 +41,7 @@ export default class extends React.Component {
 
     return (
       <div>
-          <div>testing testing testing</div>
+        <li member={this.member}>{this.member}</li>
       </div>
     );
   }

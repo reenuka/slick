@@ -18,9 +18,11 @@ export default class MemberList extends Component {
     return (
       <div>
         <h3>Member List</h3>
-        {this.state.users.map(member => (
-          <Member member={member}/>
-        ))}
+        <ul>
+          {this.state.users.map(member => (
+            <Member member={member}/>
+          ))}
+        </ul>
       </div>
     );
   }
