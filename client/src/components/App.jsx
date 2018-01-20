@@ -117,7 +117,6 @@ export default class App extends React.Component {
     } = this.state;
     let typing;
     const timer = 5000;
-    console.log(this.state.typer)
     return (
       <div className="app-container">
         <NavBar currentWorkSpaceName={currentWorkSpaceName} username={this.props.location.state.username} />

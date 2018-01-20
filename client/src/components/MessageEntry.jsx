@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Media } from 'reactstrap';
 
-//Individual message container
+// Individual message container
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -13,8 +13,8 @@ export default class extends React.Component {
     this.setState({ toggleHover: !this.state.toggleHover });
   }
   render() {
-    const { message } = this.props;
-    //for the color changing avatars
+    const { message, lastmessage } = this.props;
+    // for the color changing avatars
     let color = () => {
       let colors = [
         '#346A85',
@@ -35,7 +35,7 @@ export default class extends React.Component {
       let index = Math.floor(Math.random() * colors.length);
       return colors[index];
     };
-    //Styles for individual message component
+    // Styles for individual message component
     const styles = {
       body: {
         padding: '15px 0 15px 0',
@@ -64,9 +64,14 @@ export default class extends React.Component {
         marginRight: '7px',
       },
     };
-
+    const currentMessageTime = new Date(message.createdAt);
+    const lastMessageTime = lastmessage === undefined ? 0 : new Date(lastmessage.createdAt);
     return (
-      <div className="message-entry-container">
+      <div>
+        { (lastmessage !== undefined && message !== undefined && lastmessage.username === message.username && ((currentMessageTime - lastMessageTime) < 300000)) ? (<div className="message-entry-container">
+          <div style={styles.message}>{ message.text.includes('https://s3-us-west-1.amazonaws.com/slickslack') ? <a href={message.text} > {message.text} <img src={message.text} /> </a> : message.text }</div>
+                                                                                                                                                                                             </div>) :
+      (<div className="message-entry-container">
         <Container style={styles.body}>
           <Media left href="#">
             <img
@@ -81,8 +86,10 @@ export default class extends React.Component {
             {message.username}
             <span style={styles.timeStamp}>{new Date(message.createdAt).toLocaleTimeString()}</span>
           </span>
-          <div style={styles.message}>{ message.text.includes('https://s3-us-west-1.amazonaws.com/slickslack') ? <a href ={message.text} > {message.text} <img src={message.text} /> </a> : message.text }</div>
+          <div style={styles.message}>{ message.text.includes('https://s3-us-west-1.amazonaws.com/slickslack') ? <a href={message.text} > {message.text} <img src={message.text} /> </a> : message.text }</div>
         </Container>
+      </div>)
+    }
       </div>
     );
   }
