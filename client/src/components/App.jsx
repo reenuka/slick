@@ -8,6 +8,7 @@ import ProgressBar from './ProgressBar.jsx';
 import Body from './Body.jsx';
 import Dropzone from 'react-dropzone';
 import upload from 'superagent';
+import badWords from '../dist/badWords.js'
 
 // The main component of the App. Renders the core functionality of the project.
 export default class App extends React.Component {
@@ -85,6 +86,7 @@ export default class App extends React.Component {
   handleKeyPress(event) {
     // on key press enter send message and reset text box
     if (event.charCode === 13 && !event.shiftKey) {
+      this.state.query = this.filterMessage(this.state.query, badWords);
       event.preventDefault();
       sendMessage({
         username: this.props.location.state.username,
@@ -97,6 +99,17 @@ export default class App extends React.Component {
         query: '',
       });
     }
+  }
+
+  //Profanity Filter
+  filterMessage(message, badWords) {
+    var words = message.split(' ');
+    words.forEach((word) => {
+      if (badWords.contains(word)) {
+        word = '*' * word.length;
+      }
+    })
+    return words.concat('');
   }
 
   // sends keydown event to server to handle typing event
