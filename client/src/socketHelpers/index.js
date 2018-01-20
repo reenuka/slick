@@ -25,8 +25,14 @@ const addNewMessage = (message) => {
 };
 
 // takes in an array of users and sets the current app state
-const setUsers = (users) => {
-  app.setState({ users });
+const setUsers = (data) => {
+  const msg = {
+    method: 'GETUSERS',
+    data: {
+      users: data.users
+    }
+  }
+  ws.send(JSON.stringify(msg));
 };
 
 // takes in a parameter and sends that parameter to the socket server
