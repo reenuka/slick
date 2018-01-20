@@ -110,7 +110,7 @@ export default class App extends React.Component {
   enableProfanityFilter(event) {
     this.setState({
       filterMessages: !this.state.filterMessages
-    })
+    });
   }
 
   //Profanity Filter
@@ -177,6 +177,7 @@ export default class App extends React.Component {
           loadWorkSpaces={() => this.loadWorkSpaces()}
           changeCurrentWorkSpace={(id, name) => this.changeCurrentWorkSpace(id, name)}
           currentWorkSpaceId={currentWorkSpaceId}
+          enableProfanityFilter={(event) => this.enableProfanityFilter(event)}
         />
         <div className="messages-input">
           <div className="image-input">
