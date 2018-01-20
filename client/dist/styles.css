@@ -92,3 +92,8 @@
   background-color: #4c9689;
   color: #ffffff;
 }
+
+.uploaded-image{
+  height:50%;
+  width: 50%;
+}
