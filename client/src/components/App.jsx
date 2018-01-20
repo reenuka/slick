@@ -8,7 +8,7 @@ import ProgressBar from './ProgressBar.jsx';
 import Body from './Body.jsx';
 import Dropzone from 'react-dropzone';
 import upload from 'superagent';
-import badWords from '../dist/badWords.js'
+import badWords from '../../dist/badWords.js'
 
 // The main component of the App. Renders the core functionality of the project.
 export default class App extends React.Component {
@@ -36,6 +36,7 @@ export default class App extends React.Component {
       query: '',
       currentWorkSpaceId: 0,
       currentWorkSpaceName: '',
+      enableProfanityFilter: false
     };
     this.onDrop = this.onDrop.bind(this);
     this.toggler = this.toggler.bind(this);
@@ -86,11 +87,16 @@ export default class App extends React.Component {
   handleKeyPress(event) {
     // on key press enter send message and reset text box
     if (event.charCode === 13 && !event.shiftKey) {
-      this.state.query = this.filterMessage(this.state.query, badWords);
       event.preventDefault();
+      var message = '';
+      if (this.state.enableProfanityFilter) {
+        message = this.filterMessage(this.state.query);
+      } else {
+        message = this.state.query;
+      }
       sendMessage({
         username: this.props.location.state.username,
-        text: this.state.query,
+        text: message,
         workspaceId: this.state.currentWorkSpaceId,
       });
       this.messageStart();
@@ -101,15 +107,25 @@ export default class App extends React.Component {
     }
   }
 
-  //Profanity Filter
-  filterMessage(message, badWords) {
-    var words = message.split(' ');
-    words.forEach((word) => {
-      if (badWords.contains(word)) {
-        word = '*' * word.length;
-      }
+  enableProfanityFilter(event) {
+    this.setState({
+      filterMessages: !this.state.filterMessages
     })
-    return words.concat('');
+  }
+
+  //Profanity Filter
+  filterMessage(message) {
+    var words = message.split(' ');
+    for (var i = 0; i < words.length; i++) {
+      if (badWords.indexOf(words[i].toLowerCase()) !== -1) {
+        if (words[i].toLowerCase() === 'trump') {
+          words[i] = 'Orange Anus';
+        } else {
+          words[i] = '*'.repeat(words[i].length);
+        }
+      }
+    }
+    return words.join(' ');
   }
 
   // sends keydown event to server to handle typing event
@@ -147,7 +163,7 @@ export default class App extends React.Component {
   // renders nav bar, body(which contains all message components other than input), and message input
   render() {
     let {
-      messages, query, workSpaces, currentWorkSpaceId, currentWorkSpaceName,
+      messages, query, users, workSpaces, currentWorkSpaceId, currentWorkSpaceName, enableProfanityFilter
     } = this.state;
     let typing;
     const timer = 5000;

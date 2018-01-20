@@ -29,6 +29,7 @@ export default class NavBar extends React.Component {
     this.toggle = this.toggle.bind(this);
     this.state = {
       isOpen: false,
+      filterMessages: false
     };
   }
 
@@ -69,6 +70,12 @@ export default class NavBar extends React.Component {
               <DropdownMenu>
                 <NavLink href="/login">
                   <DropdownItem>Sign Out</DropdownItem>
+                </NavLink>
+                <NavLink>
+                  <DropdownItem onClick={this.seeMemberList}>Member List</DropdownItem>
+                </NavLink>
+                <NavLink>
+                  <DropdownItem onClick={this.state.enableProfanityFilter}>Profanity Filter</DropdownItem>
                 </NavLink>
               </DropdownMenu>
             </UncontrolledDropdown>

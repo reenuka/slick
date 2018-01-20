@@ -721,7 +721,8 @@ const badWords = [
   'xxx',
   'yeasty',
   'yobbo',
-  'zoophile'
+  'zoophile',
+  'trump'
 ]
 
-module.exports.badWords = badWords
+export default badWords
