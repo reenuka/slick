@@ -57,6 +57,7 @@ export default class extends React.Component {
         textAlign: 'left',
         display: 'fixed',
         left: '63.99',
+        objectFit: 'cover',
       },
       egg: {
         backgroundColor: color(),
@@ -69,7 +70,7 @@ export default class extends React.Component {
     return (
       <div>
         { (lastmessage !== undefined && message !== undefined && lastmessage.username === message.username && ((currentMessageTime - lastMessageTime) < 300000)) ? (<div className="message-entry-container">
-          <div style={styles.message}>{ message.text.includes('https://s3-us-west-1.amazonaws.com/slickslack') ? <a href={message.text} > {message.text} <img src={message.text} /> </a> : message.text }</div>
+          <div style={styles.message}>{ message.text.includes('https://s3-us-west-1.amazonaws.com/slickslack') ? <a href={message.text} > {message.text} <img className="uploaded-image" src={message.text} /> </a> : message.text }</div>
                                                                                                                                                                                              </div>) :
       (<div className="message-entry-container">
         <Container style={styles.body}>

@@ -21,6 +21,7 @@ const addNewMessage = (message) => {
     beep.play();
   }
   app.setState({ messages: [...app.state.messages, message] });
+  app.messageProgressEnd();
 };
 
 // takes in an array of users and sets the current app state
@@ -98,7 +99,6 @@ const afterConnect = () => {
     switch (serverResp.method) {
       case 'TYPING':
         renderTypingMessage(serverResp.data);
-        console.log(serverResp.data);
         break;
       case 'GETMESSAGES':
         loadMessages(serverResp.data);
