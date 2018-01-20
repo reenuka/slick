@@ -75,7 +75,6 @@ const filterMsgByWorkSpace = (msg) => {
 let timer = null;
 
 const renderTypingMessage = (data) => {
-  console.log(data)
   app.setState({
     typer: data.username,
     typingWorkSpaceID: data.workspaceId,

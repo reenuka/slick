@@ -9,7 +9,7 @@ export default class TypingAlert extends React.Component {
   }
 
   randomEmoji() {
-    const emojis = ['🧐', '🤔', '😡', '🤪', '😬', '🙄', '😂', '🍻', '🔥', '🍑', '💩', '🌚'];
+    const emojis = ['🧐', '🤔', '😡', '🤪', '😬', '🙄', '😂', '🍻', '🔥', '🍑', '💩', '🌚', '🍔', '🍆', '👨‍💻', '👩🏻‍💻', '❤️', '🐶'];
     let randomEmoji = Math.floor(Math.random() * Math.floor(emojis.length));
     return emojis[randomEmoji];
   }

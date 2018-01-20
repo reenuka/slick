@@ -50,7 +50,6 @@ const onMessage = async (ws, wss, data) => {
           username: message.data.username,
           workspaceId: message.data.workspaceId,
         }));
-        console.log(message);
         return updateEveryoneElse(
           ws,
           wss,
