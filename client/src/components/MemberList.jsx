@@ -32,7 +32,3 @@ export default class MemberList extends Component {
 //   members: PropTypes.array,
 //   currentWorkSpaceId: PropTypes.number,
 // }
-
-// {members.map(workSpace => (
-//   <Member />
-// ))}

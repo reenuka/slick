@@ -88,12 +88,12 @@ export default class App extends React.Component {
     // on key press enter send message and reset text box
     if (event.charCode === 13 && !event.shiftKey) {
       event.preventDefault();
-      var message = '';
-      if (this.state.enableProfanityFilter) {
-        message = this.filterMessage(this.state.query);
-      } else {
-        message = this.state.query;
-      }
+      // var message = '';
+      // if (this.state.enableProfanityFilter) {
+      var message = this.filterMessage(this.state.query);
+      // } else {
+      //   message = this.state.query;
+      // }
       sendMessage({
         username: this.props.location.state.username,
         text: message,
@@ -107,11 +107,11 @@ export default class App extends React.Component {
     }
   }
 
-  enableProfanityFilter(event) {
-    this.setState({
-      filterMessages: !this.state.filterMessages
-    });
-  }
+  // enableProfanityFilter(event) {
+  //   this.setState({
+  //     filterMessages: !this.state.filterMessages
+  //   });
+  // }
 
   //Profanity Filter
   filterMessage(message) {

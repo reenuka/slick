@@ -2,6 +2,7 @@ import React from 'react';
 import { Container, Row, Col, ListGroup, ListGroupItem } from 'reactstrap';
 import MessageList from './MessageList.jsx';
 import WorkSpaceList from './WorkSpaceList.jsx';
+import DirectMessageList from './DirectMessageList.jsx';
 import PropTypes from 'prop-types';
 import MemberList from './MemberList.jsx';
 

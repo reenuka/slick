@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 
 //this is the button and then the actual popup that appears to create a workspace
-export default class CreateWorkSpace extends React.Component {
+export default class CreateDirectMessage extends React.Component {
   constructor(props) {
     super(props);
 
@@ -39,16 +39,16 @@ export default class CreateWorkSpace extends React.Component {
   render() {
     return (
       <div>
-        <Button id="Popover1" onClick={this.toggle}>
+        <Button id="Popover2" onClick={this.toggle}>
           +
         </Button>
         <Popover
           placement="bottom"
           isOpen={this.state.popoverOpen}
-          target="Popover1"
+          target="Popover2"
           toggle={this.toggle}
         >
-          <PopoverHeader>Enter Workspace name: </PopoverHeader>
+          <PopoverHeader>Enter username: </PopoverHeader>
           <PopoverBody>
             <input type="text" placeholder="workspace name.." onChange={event => this.handleChange(event)} />
             <button onClick={() => this.handleClick()}> Add </button>

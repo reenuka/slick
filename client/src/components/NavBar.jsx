@@ -74,7 +74,7 @@ export default class NavBar extends React.Component {
                   <DropdownItem onClick={this.seeMemberList}>Member List</DropdownItem>
                 </NavLink>
                 <NavLink>
-                  <DropdownItem onClick={this.props.enableProfanityFilter(event)}>Profanity Filter</DropdownItem>
+                  <DropdownItem>Profanity Filter</DropdownItem>
                 </NavLink>
               </DropdownMenu>
             </UncontrolledDropdown>
@@ -93,3 +93,4 @@ NavBar.defaultProps = {
 }
 
 // onClick={this.updateUsers}
+// onClick={this.props.enableProfanityFilter(event)}

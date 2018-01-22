@@ -3,7 +3,7 @@ import { Button } from 'reactstrap';
 import { getWorkSpaceMessagesFromServer } from '../socketHelpers/index.js';
 import PropTypes from 'prop-types';
 
-export default class WorkSpaceEntry extends Component {
+export default class DirectMessageEntry extends Component {
   constructor(props) {
     super(props);
     this.state = {};
@@ -39,6 +39,6 @@ export default class WorkSpaceEntry extends Component {
   }
 }
 
-WorkSpaceEntry.propTypes = {
+DirectMessageEntry.propTypes = {
   currentWorkSpaceId: PropTypes.number,
 }
